@@ -1,11 +1,11 @@
 package semverfi
 
-import org.specs._
+import org.specs2.mutable._
 
 object OptSpec extends Specification {
   "transforming to parsed versions" should {
     "have no effect on invalid versions" in {
-      Version("junk").opt.map(_.prerelease("SNAPSHOT")) mustBe None
+      Version("junk").opt.map(_.prerelease("SNAPSHOT")) must_== None
     }
     "have an effect on valid versions" in {
       Version("0.1.0").opt.map(_.prerelease("SNAPSHOT")) must_== Some(
@@ -13,4 +13,3 @@ object OptSpec extends Specification {
     }
   }
 }
-

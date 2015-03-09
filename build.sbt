@@ -6,21 +6,24 @@ version := "0.1.3"
 
 name := "semverfi"
 
+scalaVersion := "2.11.5"
+
 description := "Always Faithful, always loyal semantic versions"
 
 homepage := Some(url("https://github.com/softprops/semverfi"))
 
-crossScalaVersions := Seq("2.9.1-1", "2.9.2",
-                          "2.10.0", "2.10.1")
+crossScalaVersions := Seq("2.11.5")
 
 scalacOptions += "-deprecation"
 
-libraryDependencies <+= scalaVersion( v =>
-  (v.split("[.-]").toList match {
-    case "2" :: "9" :: _ => "org.scala-tools.testing" % "specs_2.9.1" % "1.6.9"
-    case _ => "org.scala-tools.testing" %% "specs" % "1.6.9"
-  }) % "test"
+libraryDependencies ++= Seq(
+	"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3",
+	"org.specs2" %% "specs2-core" % "3.0.1" % "test"
 )
+
+resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
+
+scalacOptions in Test ++= Seq("-Yrangepos")
 
 publishMavenStyle := true
 
