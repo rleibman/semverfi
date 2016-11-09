@@ -6,4 +6,4 @@ addSbtPlugin("me.lessis" % "ls-sbt" % "0.1.3")
 
 resolvers += "Sonatype OSS Snapshots" at "https://oss.sonatype.org/content/repositories/snapshots"
 
-addSbtPlugin("com.typesafe.sbteclipse" % "sbteclipse-plugin" % "3.0.0")
+addSbtPlugin("org.scala-js" % "sbt-scalajs" % "0.6.13")

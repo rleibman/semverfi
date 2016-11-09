@@ -2,23 +2,23 @@ import java.lang.Boolean.{ parseBoolean => bool }
 
 organization := "me.lessis"
 
-version := "0.1.3"
+version := "0.1.5"
 
 name := "semverfi"
 
-scalaVersion := "2.11.5"
+scalaVersion := "2.12.0"
 
 description := "Always Faithful, always loyal semantic versions"
 
 homepage := Some(url("https://github.com/softprops/semverfi"))
 
-crossScalaVersions := Seq("2.11.5")
+crossScalaVersions := Seq("2.11.8", "2.12.0")
 
 scalacOptions += "-deprecation"
 
 libraryDependencies ++= Seq(
-	"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.3",
-	"org.specs2" %% "specs2-core" % "3.0.1" % "test"
+	"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6",
+	"org.specs2" %% "specs2-core" % "3.8.6" % "test"
 )
 
 resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
@@ -53,5 +53,7 @@ logLevel in Compile := { if (bool(sys.env.getOrElse("TRAVIS", "false"))) Level.W
 logLevel in Test := { if (bool(sys.env.getOrElse("TRAVIS", "false"))) Level.Info else Level.Info }
 
 seq(lsSettings:_*)
+
+enablePlugins(ScalaJSPlugin)
 
 LsKeys.tags in LsKeys.lsync := Seq("semver", "version")
