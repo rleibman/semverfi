@@ -6,19 +6,19 @@ trait Show[T <: SemVersion] {
 
 object Show {
   implicit object ShowNormal extends Show[NormalVersion] {
-    def show(v: NormalVersion) = "%d.%d.%d" format(
+    def show(v: NormalVersion) = "%d.%d.%d" format (
       v.major, v.minor, v.patch
     )
   }
 
   implicit object ShowPreRelease extends Show[PreReleaseVersion] {
-    def show(v: PreReleaseVersion) = "%d.%d.%d-%s" format(
+    def show(v: PreReleaseVersion) = "%d.%d.%d-%s" format (
       v.major, v.minor, v.patch, v.classifier.mkString(".")
     )
   }
 
   implicit object ShowBuild extends Show[BuildVersion] {
-    def show(v: BuildVersion) = "%d.%d.%d%s+%s" format(
+    def show(v: BuildVersion) = "%d.%d.%d%s+%s" format (
       v.major, v.minor, v.patch,
       v.classifier match {
         case Nil => ""

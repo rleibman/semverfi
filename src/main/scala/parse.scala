@@ -63,7 +63,7 @@ class Parse extends RegexParsers {
   def apply(in: String) = try {
     parseAll(buildVersion | preReleaseVersion | normalVersion, in) match {
       case success if (success.successful) ⇒ success.get
-      case failure                         ⇒ Invalid(in)
+      case failure ⇒ Invalid(in)
     }
   } catch {
     case e: NullPointerException ⇒ Invalid(in)

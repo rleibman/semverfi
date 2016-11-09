@@ -100,20 +100,20 @@ trait SemVersionOrdering extends Ordered[SemVersion] {
   private def byIds(a: Seq[String], b: Seq[String]): Int = {
     val Dig = """(\d+)""".r
     def zipCompare(a: Seq[String], b: Seq[String]) =
-       ((None: Option[Int]) /: a.zip(b)) {
-         case (Some(c), _) => Some(c)
-         case (_, (Dig(k), Dig(v))) =>
-           (k.toInt compareTo v.toInt) match {
-             case 0 => None
-             case c => Some(c)
-           }
-         case (_, (Dig(k), v)) => Some(1)
-         case (_, (k, Dig(v))) => Some(-1)
-         case (_, (k, v)) => (k compareTo v) match {
-           case 0 => None
-           case c => Some(c)
-         }
-       }
+      ((None: Option[Int]) /: a.zip(b)) {
+        case (Some(c), _) => Some(c)
+        case (_, (Dig(k), Dig(v))) =>
+          (k.toInt compareTo v.toInt) match {
+            case 0 => None
+            case c => Some(c)
+          }
+        case (_, (Dig(k), v)) => Some(1)
+        case (_, (k, Dig(v))) => Some(-1)
+        case (_, (k, v)) => (k compareTo v) match {
+          case 0 => None
+          case c => Some(c)
+        }
+      }
     zipCompare(a, b).getOrElse(0) match {
       case 0 if (a.size > b.size) => 1
       case 0 if (a.size < b.size) => -1
