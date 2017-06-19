@@ -27,6 +27,13 @@ sealed trait Valid extends SemVersion
   def opt = Some(this)
 }
 
+case class Latest() extends Valid {
+  def major = Int.MaxValue
+  def minor = Int.MaxValue
+  def patch = Int.MaxValue
+  override def toString = "latest"
+}
+
 case class NormalVersion(major: Int, minor: Int, patch: Int)
   extends Valid
 

@@ -9,7 +9,8 @@ object OptSpec extends Specification {
     }
     "have an effect on valid versions" in {
       Version("0.1.0").opt.map(_.prerelease("SNAPSHOT")) must_== Some(
-        PreReleaseVersion(0, 1, 0, Seq("SNAPSHOT")))
+        PreReleaseVersion(0, 1, 0, Seq("SNAPSHOT"))
+      )
     }
   }
 }

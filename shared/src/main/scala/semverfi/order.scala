@@ -7,6 +7,9 @@ trait SemVersionOrdering extends Ordered[SemVersion] {
 
       case (a: Invalid, b: Invalid) => 0
       case (a: Invalid, _) => -1
+      case (a: Latest, b: Latest) => 0
+      case (a: Latest, _) => 1
+      case (_, b: Latest) => -1
 
       case (a: NormalVersion, b: Invalid) => 1
       case (a: NormalVersion, b: NormalVersion) =>

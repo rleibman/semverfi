@@ -32,11 +32,16 @@ object Show {
     def show(v: Invalid) = "invalid: %s" format v.raw
   }
 
+  implicit object ShowLatest extends Show[Latest] {
+    def show(v: Latest) = "latest"
+  }
+
   implicit object ShowSemVersion extends Show[SemVersion] {
     def show(v: SemVersion) = v match {
       case x: NormalVersion => implicitly[Show[NormalVersion]].show(x)
       case x: PreReleaseVersion => implicitly[Show[PreReleaseVersion]].show(x)
       case x: BuildVersion => implicitly[Show[BuildVersion]].show(x)
+      case x: Latest => implicitly[Show[Latest]].show(x)
       case x: Invalid => implicitly[Show[Invalid]].show(x)
     }
   }

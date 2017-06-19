@@ -1,59 +1,53 @@
-import java.lang.Boolean.{ parseBoolean => bool }
+lazy val root = project.in(file(".")).
+	aggregate(semverfiJS, semverfiJVM)
+	.settings(
+		publish := {},
+		publishLocal := {}
+	)
 
-organization := "me.lessis"
+lazy val semverfi = crossProject.in(file(".")).
+  settings(commonSettings).
+  settings(name := "semverfi",
+	libraryDependencies ++= Seq(
+		"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.5",
+		"org.specs2" %% "specs2-core" % "3.8.9" % "test"
+	)).
+  jvmSettings(
+    // Add JVM-specific settings here
+	name := "semverfi"
+  ).
+  jsSettings(
+    // Add JS-specific settings here
+	name := "semverfi-js"
+  )
 
-version := "0.1.5"
+lazy val semverfiJVM = semverfi.jvm
+lazy val semverfiJS = semverfi.js
 
-name := "semverfi"
-
-scalaVersion := "2.12.0"
-
-description := "Always Faithful, always loyal semantic versions"
-
-homepage := Some(url("https://github.com/softprops/semverfi"))
-
-crossScalaVersions := Seq("2.11.8", "2.12.0")
-
-scalacOptions += "-deprecation"
-
-libraryDependencies ++= Seq(
-	"org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6",
-	"org.specs2" %% "specs2-core" % "3.8.6" % "test"
+lazy val commonSettings = Seq(
+	version := "0.1.9",
+	scalaVersion := "2.12.2",
+	crossScalaVersions := Seq("2.11.11", "2.12.2"),
+	moduleName         := "semverfi",
+	description := "Always Faithful, always loyal semantic versions",
+	homepage := Some(url("https://github.com/softprops/semverfi")),
+	scalacOptions ++= Seq(
+	  "-deprecation",                      // Emit warning and location for usages of deprecated APIs.
+	  "-feature",                          // Emit warning and location for usages of features that should be imported explicitly.
+	  "-unchecked",                        // Enable additional warnings where generated code depends on assumptions.
+	  "-language:implicitConversions",     // Allow definition of implicit functions called views
+	  "-language:postfixOps"
+	),
+	pomExtra := (
+	  <scm>
+	    <url>git@github.com:softprops/semverfi.git</url>
+	    <connection>scm:git:git@github.com:softprops/semverfi.git</connection>
+	  </scm>
+	  <developers>
+	    <developer>
+	      <id>softprops</id>
+	      <name>Doug Tangren</name>
+	      <url>https://github.com/softprops</url>
+	    </developer>
+	  </developers>)
 )
-
-resolvers += "scalaz-bintray" at "http://dl.bintray.com/scalaz/releases"
-
-scalacOptions in Test ++= Seq("-Yrangepos")
-
-publishMavenStyle := true
-
-publishTo := Some(Opts.resolver.sonatypeStaging)
-
-publishArtifact in Test := false
-
-licenses <<= version(v => Seq("MIT" -> url("https://github.com/softprops/semverfi/blob/%s/LICENSE" format v)))
-
-pomExtra := (
-  <scm>
-    <url>git@github.com:softprops/semverfi.git</url>
-    <connection>scm:git:git@github.com:softprops/semverfi.git</connection>
-  </scm>
-  <developers>
-    <developer>
-      <id>softprops</id>
-      <name>Doug Tangren</name>
-      <url>https://github.com/softprops</url>
-    </developer>
-  </developers>)
-
-logLevel in Global := { if (bool(sys.env.getOrElse("TRAVIS", "false"))) Level.Warn else Level.Info }
-
-logLevel in Compile := { if (bool(sys.env.getOrElse("TRAVIS", "false"))) Level.Warn else Level.Info }
-
-logLevel in Test := { if (bool(sys.env.getOrElse("TRAVIS", "false"))) Level.Info else Level.Info }
-
-seq(lsSettings:_*)
-
-enablePlugins(ScalaJSPlugin)
-
-LsKeys.tags in LsKeys.lsync := Seq("semver", "version")

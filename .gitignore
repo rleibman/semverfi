@@ -2,8 +2,8 @@ target
 sbt
 .lib
 /bin/
-/.settings/
 .cache
 .classpath
 .history
 .project
+.settings

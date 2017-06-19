@@ -1,9 +1,15 @@
 package semverfi
 
 sealed trait Digit
-case object Major extends Digit
-case object Minor extends Digit
-case object Patch extends Digit
+case object Major extends Digit {
+  override def toString() = "major"
+}
+case object Minor extends Digit {
+  override def toString() = "minor"
+}
+case object Patch extends Digit {
+  override def toString() = "patch"
+}
 
 /**
  * The act of bumping produces a new NormalVersion,

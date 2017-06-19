@@ -19,7 +19,7 @@ class Parse extends RegexParsers {
   val anything: Parser[String] = """[0-9A-Za-z\.\-\_\+]+""".r
 
   def version: Parser[Valid] =
-    buildVersion | preReleaseVersion | normalVersion
+    latestVersion | buildVersion | preReleaseVersion | normalVersion
 
   def buildVersion: Parser[BuildVersion] =
     versionTuple ~ classifier.? ~ (Plus ~> ids) ^^ {
@@ -60,8 +60,12 @@ class Parse extends RegexParsers {
   def classifier: Parser[Seq[String]] =
     Dash ~> ids
 
+  def latestVersion: Parser[Latest] = {
+    "(?i)^latest$".r ^^ { a => Latest() }
+  }
+
   def apply(in: String) = try {
-    parseAll(buildVersion | preReleaseVersion | normalVersion, in) match {
+    parseAll(latestVersion | buildVersion | preReleaseVersion | normalVersion, in) match {
       case success if (success.successful) ⇒ success.get
       case failure ⇒ Invalid(in)
     }
