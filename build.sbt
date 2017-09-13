@@ -2,7 +2,7 @@ lazy val root = project
 	.in(file("."))
 	.aggregate(semverfiJS, semverfiJVM)
 	.settings( 
-		scalaVersion := "2.12.2",
+		scalaVersion := "2.12.3",
 		publish := {},
 		publishLocal := {}
 	)
@@ -13,15 +13,16 @@ lazy val semverfi = crossProject
 	.settings(
 		name := "semverfi",
 		libraryDependencies ++= Seq(
-			"org.scala-lang.modules" %%% "scala-parser-combinators" % "1.0.5",
 			"org.specs2" %% "specs2-core" % "3.9.5" % "test"
 		)).
 		jvmSettings(
 			// Add JVM-specific settings here
+			libraryDependencies += "org.scala-lang.modules" %% "scala-parser-combinators" % "1.0.6",
 			name := "semverfi"
 		).
 		jsSettings(
 			// Add JS-specific settings here
+			libraryDependencies += "org.scala-lang.modules" %%% "scala-parser-combinators" % "1.0.5",
 			name := "semverfi-js"
 	)
 
@@ -29,9 +30,9 @@ lazy val semverfiJVM = semverfi.jvm
 lazy val semverfiJS = semverfi.js
 
 lazy val commonSettings = Seq(
-	version := "0.2.0",
-	scalaVersion := "2.12.2",
-	crossScalaVersions := Seq("2.12.2"),
+	version := "0.2.1",
+	scalaVersion := "2.12.3",
+	crossScalaVersions := Seq("2.12.3"),
 	moduleName         := "semverfi",
 	organization       := "net.leibman",
 	description := "Always Faithful, always loyal semantic versions",
