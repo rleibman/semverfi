@@ -7,3 +7,5 @@ sbt
 .history
 .project
 .settings
+*.sjsir
+*.class
