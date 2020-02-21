@@ -11,7 +11,7 @@ A library for parsing, querying, and ordering the always faithful, always loyal 
 
 Add the following to your sbt build definition
 
-    libraryDependencies += "net.leibman" % "semverfi" % "0.2.0"
+    libraryDependencies += "net.leibman" %% "semverfi" % "0.2.0"
     
 ### the civilized method
 
